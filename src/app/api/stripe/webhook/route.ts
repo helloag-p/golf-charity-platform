@@ -55,28 +55,6 @@ export async function POST(req: NextRequest) {
   console.log("PLAN:", plan)
         break
       }
-
-      case 'invoice.paid': {
-        const invoice = event.data.object as Stripe.Invoice;
-        const subId = invoice.subscription as string 
-        
-        // Cast here to resolve the 'Response' error
-        if(!subId) break
-        const sub = await stripe.subscriptions.retrieve(subId)
-        const userId = sub.metadata?.supabase_user_id
-
-        if (!userId) break
-
-        await supabaseAdmin
-          .from('subscriptions')
-          .update({
-            status: 'active',
-            current_period_end: new Date(sub.items.data[0].current_period_end * 1000).toISOString(),
-          })
-          .eq('stripe_subscription_id', subId)
-        break
-      }
-
       case 'customer.subscription.deleted': {
         const sub = event.data.object as Stripe.Subscription
 
