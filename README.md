@@ -263,6 +263,7 @@ src/
 
 ## Features
 
+| Section | Status | Implementation |
 |---|---|---|
 | Subscription engine | ✅ | Stripe checkout, webhooks, lifecycle management |
 | Score experience | ✅ | Rolling 5-score input with Stableford validation |
